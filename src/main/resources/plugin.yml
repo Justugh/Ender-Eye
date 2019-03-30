@@ -1,0 +1,6 @@
+name: EnderEye
+version: ${project.version}
+main: net.justugh.endereye.EnderEye
+authors: [Justugh]
+description: EnderEye is a staff management plugin for Spigot.
+website: www.justugh.net
