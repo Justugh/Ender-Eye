@@ -1,0 +1,14 @@
+# This is used to update the config, changing this will break the config.
+config-version: 0.1
+
+#########################################################################
+#                           Configuration                               #
+#########################################################################
+Prefix: "&9&lEnder Eye &8» &9"
+
+#########################################################################
+#                          X-Ray Configuration                          #
+#########################################################################
+No-Data: "%prefix% "
+Check-Title: "&9X-Ray Data for &b%player%&8:"
+Check-Item: "&b%ore_type% &8(&9Amount Mined&8: &b%amount_mined%&8, &9Veins Mined&8: &b%veins_mined%&8) (&b%percentage%%&8)"
