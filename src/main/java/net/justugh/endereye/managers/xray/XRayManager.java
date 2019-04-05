@@ -56,6 +56,10 @@ public class XRayManager implements Listener {
      * @return The percentage of this mined OreType.
      */
     public float getPercentage(XRayPlayer player, OreType type) {
+        if(getOreData(player, type).getAmountMined() == 0) {
+            return 0;
+        }
+
         int total = 0;
 
         for (OreData oreData : player.getOreData()) {
