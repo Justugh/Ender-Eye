@@ -15,7 +15,8 @@ public enum OreType {
     LAPIS("Lapis Lazuli Ore", Material.LAPIS_ORE),
     REDSTONE("Redstone Ore", Material.REDSTONE_ORE),
     EMERALD("Emerald Ore", Material.EMERALD_ORE),
-    DIAMOND("Diamond Ore", Material.DIAMOND_ORE);
+    DIAMOND("Diamond Ore", Material.DIAMOND_ORE),
+    QUARTZ("Quartz Ore", Material.QUARTZ_ORE);
 
     String friendlyName;
     Material material;
