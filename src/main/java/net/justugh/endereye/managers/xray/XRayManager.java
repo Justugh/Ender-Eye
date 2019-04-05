@@ -44,7 +44,6 @@ public class XRayManager implements Listener {
         if (!isInVein(event.getBlock())) {
             oreData.setOreVeinsMined(oreData.getOreVeinsMined() + 1);
             oreData.setLastVeinMined(System.currentTimeMillis());
-            Bukkit.broadcastMessage("Vein mined.");
         }
 
         oreData.setAmountMined(oreData.getAmountMined() + 1);
