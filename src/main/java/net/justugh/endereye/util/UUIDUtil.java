@@ -98,7 +98,7 @@ public class UUIDUtil {
         String newResult = result.toString();
 
         if (newResult.equals("null")) {
-            return null;
+            return UUID.fromString("00000000-0000-0000-0000-000000000000");
         }
 
         StringBuilder uuid = new StringBuilder();
