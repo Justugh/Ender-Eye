@@ -9,7 +9,6 @@ public class OreData {
     private OreType oreType;
 
     private int oreVeinsMined, amountMined;
-    private long lastVeinMined;
 
     public OreData(OreType oreType) {
         this.oreType = oreType;
