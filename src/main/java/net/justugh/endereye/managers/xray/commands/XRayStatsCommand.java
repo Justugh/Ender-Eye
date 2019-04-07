@@ -19,9 +19,13 @@ public class XRayStatsCommand implements CommandExecutor {
         if(label.equalsIgnoreCase("xraycheck")) {
             if(sender instanceof Player) {
                 if(args.length >= 1) {
-                    displayCheck((Player) sender, args[0]);
+                    if(args.length >= 2) {
+                        displayCheck((Player) sender, args[0], args[1]);
+                    } else {
+                        displayCheck((Player) sender, args[0], ((Player) sender).getWorld().getName());
+                    }
                 } else {
-
+                    sender.sendMessage(F.format(EnderEye.getInstance().getLocale().getXrayCommandUsage()));
                 }
             } else {
                 sender.sendMessage(F.format(EnderEye.getInstance().getLocale().getSenderMustBePlayer()));
@@ -30,12 +34,17 @@ public class XRayStatsCommand implements CommandExecutor {
         return true;
     }
 
-    private void displayCheck(Player sender, String player) {
+    private void displayCheck(Player sender, String player, String world) {
         EnderEye enderEye = EnderEye.getInstance();
         OfflinePlayer bukkitPlayer = Bukkit.getOfflinePlayer(UUIDUtil.getUUID(player));
 
-        if(bukkitPlayer != null) {
-            XRayPlayer xRayPlayer = enderEye.getXRayManager().getXRayPlayer(bukkitPlayer.getUniqueId());
+        if(bukkitPlayer != null && bukkitPlayer.hasPlayedBefore()) {
+            XRayPlayer xRayPlayer = enderEye.getXRayManager().getXRayPlayer(bukkitPlayer.getUniqueId(), world);
+
+            if(xRayPlayer == null) {
+                sender.sendMessage(F.format(enderEye.getLocale().getXrayNoWorldData().replace("%player%", player).replace("%world%", world)));
+                return;
+            }
 
             sender.sendMessage(F.format(enderEye.getLocale().getXrayDataTitle().replace("%player%", bukkitPlayer.getName())));
 
@@ -47,7 +56,7 @@ public class XRayStatsCommand implements CommandExecutor {
                         .replace("%percentage%", enderEye.getXRayManager().getPercentage(xRayPlayer, oreData.getOreType()) + "")));
             }
         } else {
-            sender.sendMessage(F.format(enderEye.getLocale().getXrayNoWorldData().replace("%player%", player).replace("%world%", sender.getWorld().getName())));
+            sender.sendMessage(F.format(enderEye.getLocale().getXrayNoWorldData().replace("%player%", player).replace("%world%", world)));
         }
     }
 

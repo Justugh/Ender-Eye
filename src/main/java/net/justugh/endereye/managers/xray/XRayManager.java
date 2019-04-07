@@ -30,18 +30,22 @@ public class XRayManager implements Listener {
 
     public XRayManager() {
         WORLD_FOLDER = new File(EnderEye.getInstance().getDataFolder() + File.separator + "X-Ray Worlds");
+
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(EnderEye.getInstance(), () -> worldCache.forEach(WorldCache::saveAll), 0, EnderEye.getInstance().getConfiguration().getXraySaveTime() * 20);
     }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         if (getXRayPlayer(event.getPlayer().getUniqueId(), event.getPlayer().getWorld().getName()) == null) {
-            //TODO: Create new instance
+            createNewXRayPlayer(event.getPlayer().getUniqueId(), event.getPlayer().getWorld().getName());
         }
     }
 
     @EventHandler
     public void onWorldChange(PlayerChangedWorldEvent event) {
-        Bukkit.broadcastMessage("World changed.");
+        if (getXRayPlayer(event.getPlayer().getUniqueId(), event.getPlayer().getWorld().getName()) == null) {
+            createNewXRayPlayer(event.getPlayer().getUniqueId(), event.getPlayer().getWorld().getName());
+        }
     }
 
     @EventHandler
@@ -56,11 +60,26 @@ public class XRayManager implements Listener {
 
         if (!isInVein(event.getBlock())) {
             oreData.setOreVeinsMined(oreData.getOreVeinsMined() + 1);
-            oreData.setLastVeinMined(System.currentTimeMillis());
         }
 
         oreData.setAmountMined(oreData.getAmountMined() + 1);
     }
+
+    /**
+     * Create new X-Ray Player instance and add to cache.
+     *
+     * @param player The new UUID of the player.
+     * @param world The world of the player.
+     * @return The newly created X-Ray Player instance.
+     */
+     public XRayPlayer createNewXRayPlayer(UUID player, String world) {
+         WorldCache cache = getWorldCache(world, true);
+         XRayPlayer xRayPlayer = new XRayPlayer(player, world);
+         xRayPlayer.saveToFile();
+
+         cache.getPlayerCache().put(player, xRayPlayer);
+         return xRayPlayer;
+     }
 
     /**
      * Get the percentage of ore mined.
@@ -102,13 +121,8 @@ public class XRayManager implements Listener {
      * @return The X-Ray Player instance.
      */
     public XRayPlayer getXRayPlayer(UUID uuid, String world) {
-        WorldCache cache = worldCache.stream().filter(instance -> instance.getWorld().equals(world)).findFirst().orElse(null);
-
-        if(cache == null) {
-            return null;
-        }
-
-        return cache.getPlayerCache().get(uuid);
+        WorldCache cache = getWorldCache(world, false);
+        return cache == null ? null : cache.getPlayerCache().get(uuid);
     }
 
     /**
@@ -131,6 +145,18 @@ public class XRayManager implements Listener {
         }
 
         return null;
+    }
+
+    public WorldCache getWorldCache(String world, boolean generate) {
+        WorldCache cache = worldCache.stream().filter(instance -> instance.getWorld().equals(world)).findFirst().orElse(null);
+
+        if(cache == null && generate) {
+            cache = new WorldCache(world);
+
+            worldCache.add(cache);
+        }
+
+        return cache;
     }
 
     /**
