@@ -34,7 +34,7 @@ public class XRayPlayer {
      * Save data to player File.
      */
     public void saveToFile() {
-        File playerFile = new File(EnderEye.getInstance().getXRayManager().getWORLD_FOLDER() + File.separator + world + File.separator + uuid + ".json");
+        File playerFile = new File(EnderEye.getInstance().getXRayManager().WORLD_FOLDER + File.separator + world + File.separator + uuid + ".json");
 
         try {
             FileUtils.writeStringToFile(playerFile, new GsonBuilder().setPrettyPrinting().create().toJson(this));

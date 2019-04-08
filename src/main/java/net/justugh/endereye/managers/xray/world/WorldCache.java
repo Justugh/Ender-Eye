@@ -30,7 +30,7 @@ public class WorldCache {
      * Load all player files into the player cache.
      */
     private void loadCache() {
-        File worldFile = new File(EnderEye.getInstance().getXRayManager().getWORLD_FOLDER() + File.separator + world);
+        File worldFile = new File(EnderEye.getInstance().getXRayManager().WORLD_FOLDER + File.separator + world);
 
         if(!worldFile.exists()) {
             worldFile.mkdir();

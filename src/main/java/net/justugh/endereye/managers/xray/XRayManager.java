@@ -2,6 +2,7 @@ package net.justugh.endereye.managers.xray;
 
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
+import lombok.AccessLevel;
 import lombok.Getter;
 import net.justugh.endereye.EnderEye;
 import net.justugh.endereye.managers.xray.ore.OreData;
@@ -26,7 +27,8 @@ import java.util.UUID;
 public class XRayManager implements Listener {
 
     private List<WorldCache> worldCache = Lists.newArrayList();
-    private final File WORLD_FOLDER;
+    @Getter(AccessLevel.NONE)
+    public final File WORLD_FOLDER;
 
     public XRayManager() {
         WORLD_FOLDER = new File(EnderEye.getInstance().getDataFolder() + File.separator + "X-Ray Worlds");
@@ -147,6 +149,13 @@ public class XRayManager implements Listener {
         return null;
     }
 
+    /**
+     * Get WorldCache instance.
+     *
+     * @param world The world name.
+     * @param generate Whether or not to generate a new WorldCache if null.
+     * @return The WorldCache instance.
+     */
     public WorldCache getWorldCache(String world, boolean generate) {
         WorldCache cache = worldCache.stream().filter(instance -> instance.getWorld().equals(world)).findFirst().orElse(null);
 
