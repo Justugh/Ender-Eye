@@ -44,7 +44,7 @@ public class EnderEye extends JavaPlugin {
     }
 
     /**
-     * Load the Locale file to memory.
+     * Load the Config file to memory.
      */
     private void loadConfig() {
         File configFile = new File(getDataFolder() + File.separator + "config.json");
