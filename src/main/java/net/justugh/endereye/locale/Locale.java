@@ -7,7 +7,6 @@ public class Locale {
 
     // General
     private final String prefix = "&9&lEnder Eye &8»&9";
-    private final String senderMustBePlayer = "%prefix% Only players can use this command!";
 
     // X-Ray
     private final String xrayCommandUsage = "%prefix% Usage: /xraycheck <player> (world)";

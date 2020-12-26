@@ -1,5 +1,6 @@
 package net.justugh.endereye;
 
+import co.aikar.commands.PaperCommandManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.Getter;
@@ -21,6 +22,8 @@ public class EnderEye extends JavaPlugin {
     private Config configuration;
     private Locale locale;
 
+    private PaperCommandManager commandManager;
+
     private XRayManager xRayManager;
 
     @Override
@@ -29,14 +32,22 @@ public class EnderEye extends JavaPlugin {
         loadConfig();
         loadLocale();
 
+        commandManager = new PaperCommandManager(this);
+
         xRayManager = new XRayManager();
-        getCommand("xraycheck").setExecutor(new XRayStatsCommand());
+
+        loadCommands();
+
         getServer().getPluginManager().registerEvents(xRayManager, this);
     }
 
     @Override
     public void onDisable() {
 
+    }
+
+    private void loadCommands() {
+        commandManager.registerCommand(new XRayStatsCommand());
     }
 
     public static EnderEye getInstance() {
