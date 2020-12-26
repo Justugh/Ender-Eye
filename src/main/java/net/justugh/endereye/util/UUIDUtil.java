@@ -14,11 +14,11 @@ import java.util.UUID;
 
 public class UUIDUtil {
 
-    private static HashMap<String, UUID> uuidCache = Maps.newHashMap();
+    private static final HashMap<String, UUID> uuidCache = Maps.newHashMap();
 
     /**
      * Read UUID data.
-     * 
+     *
      * @param data The data to read
      * @param result The StringBuilder to append the data onto
      */
@@ -43,7 +43,7 @@ public class UUIDUtil {
 
     /**
      * Call the a URL to retrieve JSON data.
-     * 
+     *
      * @param URL The URL to be scanned
      * @return The data retrieved
      */
@@ -80,7 +80,7 @@ public class UUIDUtil {
 
     /**
      * Get a player's UUID from Mojang, so we know it's up to date.
-     * 
+     *
      * @param playerName The player whose UUID is being retrieved
      * @return The UUID retrieved
      */
@@ -88,7 +88,7 @@ public class UUIDUtil {
         if(getUUIDCache().containsKey(playerName)) {
             return getUUIDCache().get(playerName);
         }
-        
+
         String output = callURL("https://api.mojang.com/users/profiles/minecraft/" + playerName);
 
         StringBuilder result = new StringBuilder();
@@ -117,4 +117,5 @@ public class UUIDUtil {
     public static HashMap<String, UUID> getUUIDCache() {
         return uuidCache;
     }
+
 }

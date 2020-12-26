@@ -5,6 +5,12 @@ import lombok.Getter;
 @Getter
 public class Config {
 
-    private long xraySaveTime = 30;
+    // X-Ray Options
+    private final long xraySaveTime = 30;
+    private final String xrayCommandPermission = "endereye.xraycheck";
+
+    // Vanish Options
+    private final String vanishCommandPermission = "endereye.vanish";
+    private final String seeVanishedPlayersPermission = "endereye.seevanished";
 
 }
